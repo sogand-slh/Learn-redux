@@ -3,7 +3,7 @@ import { increaseNum, decreaseNum } from "../redux/number/numberActions";
 import { useSelector, useDispatch } from "react-redux";
 
 const Number = () => {
-  const number = useSelector((state) => state.number.number);
+  const number = useSelector((state) => state.numberState.number);
   const dispatch = useDispatch();
   return (
     <div>

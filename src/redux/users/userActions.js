@@ -1,3 +1,5 @@
+import axios from "axios";
+
 const fetchUsersRequest = () => {
   return {
     type: "FETCH_USERS_REQUEST",
@@ -13,8 +15,23 @@ const fetchUsersSuccess = (users) => {
 
 const fetchUsersFailure = (error) => {
   return {
-    type: "FETCH_",
+    type: "FETCH_USERS_FAILURE",
+    payload: error,
   };
 };
 
-export { fetchUsersRequest, fetchUsersSuccess };
+export const fetchUsers = () => {
+  return (dispatch) => {
+    dispatch(fetchUsersRequest());
+    axios
+      .get("https://jsonplaceholder.typicode.com/users")
+      .then((response) => {
+        const users = response.data;
+        dispatch(fetchUsersSuccess(users));
+      })
+      .catch((error) => {
+        const errorMsg = error.message;
+        dispatch(fetchUsersFailure(errorMsg));
+      });
+  };
+};
